@@ -1,0 +1,18 @@
+{
+  "name": "uni_inter",
+  "version": "1.0.0",
+  "description": "Universidad Inter",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./input.css -o ./output.css",
+    "watch": "npx tailwindcss -i ./input.css -o ./output.css --watch"  
+  },
+  "author": "Victor Riveros",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.1.4"
+  },
+  "dependencies": {
+    "flowbite": "^1.4.7"
+  }
+}
