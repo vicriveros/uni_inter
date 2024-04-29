@@ -4,8 +4,8 @@
   "description": "Universidad Inter",
   "main": "index.js",
   "scripts": {
-    "build": "npx tailwindcss -i ./input.css -o ./output.css",
-    "watch": "npx tailwindcss -i ./input.css -o ./output.css --watch"  
+    "build": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/output.css",
+    "watch": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/output.css --watch"  
   },
   "author": "Victor Riveros",
   "license": "MIT",
