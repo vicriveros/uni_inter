@@ -5,10 +5,12 @@
 			<div class="mx-8">
 				<?php if(have_posts()){
 					while(have_posts()){ the_post();
-				?>
-						<h1 class="mt-3 mb-5 text-4xl font-extrabold tracking-tight text-gray-900 md:text-4xl dark:text-white"><?php the_title(); ?></h1>
+						?>
+						<h1><?php the_title(); ?></h1>
+						<div class="font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+							<?php the_content(); ?>
+						</div>                 
 				<?php
-						the_content();
 					}
 				}?>  
 			</div>                 

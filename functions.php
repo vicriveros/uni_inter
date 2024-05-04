@@ -38,3 +38,85 @@ class Custom_Walker_Nav_Menu_top extends Walker_Nav_Menu
         echo '</a></li>';
     }
 }
+
+//add to menu
+function carreras_admin_menu() {
+		add_menu_page(
+			'Carreras',
+			'Carreras',
+			'read',
+			'carreras_menu',
+			'',
+			'dashicons-welcome-learn-more',
+			null
+		);
+}
+add_action( 'admin_menu', 'carreras_admin_menu' );
+
+//Register post type
+add_action('init', 'carreras_register_post_types');
+function carreras_register_post_types() {
+	$carreras_labels = array(
+		'name'               => 'Carreras',
+		'singular_name'      => 'Carrera',
+		'menu_name'          => 'Carreras'
+	);
+	$carreras_args = array(
+		'labels'             => $carreras_labels,
+		'public'             => true,
+		'has_archive'        => true,
+		'show_in_menu' => 'carreras_menu',
+        'show_in_rest'       => true,
+		'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions' )
+	);
+	register_post_type('carrera', $carreras_args);
+}
+
+//Register post type
+add_action('init', 'perfiles_register_post_types');
+function perfiles_register_post_types() {
+	$perfiles_labels = array(
+		'name'               => 'Perfiles del Egresado',
+		'singular_name'      => 'Perfil del Egresado',
+		'menu_name'          => 'Perfiles del Egresado'
+	);
+	$perfiles_args = array(
+		'labels'             => $perfiles_labels,
+		'public'             => true,
+		'has_archive'        => true,
+		'show_in_menu' => 'carreras_menu',
+        'show_in_rest'       => true,
+		'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions' )
+	);
+	register_post_type('perfiles', $perfiles_args);
+}
+
+//Register template for single custom post type
+add_filter('template_include', 'custom_carrera_template');
+function custom_carrera_template($template) {
+    if (is_singular('carrera')) {
+        $new_template = locate_template(array('single-carrera.php'));
+        if ('' != $new_template) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
+
+//Register template for archive custom post type
+add_filter('archive_template', 'custom_carrera_archive_template');
+function custom_carrera_archive_template($template) {
+    if (is_post_type_archive('carrera')) {
+        $new_template = locate_template(array('archive-carrera.php'));
+        if ('' != $new_template) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
+
+//Include the /acf folder 
+add_filter('acf/settings/load_json', function($paths) {
+    $paths[] = get_template_directory() . 'acf-json';
+    return $paths;
+});
