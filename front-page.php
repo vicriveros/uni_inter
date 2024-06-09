@@ -51,7 +51,7 @@
 				</div>
                 <div class="pt-6 mt-6 space-y-4 border-t border-gray-200 dark:border-gray-700">
                     <div>
-                        <a href="/carreras" class="inline-flex items-center text-base font-medium text-inter_red hover:text-red-700 "> Explora nuestras Carreras
+                        <a href="/carrera" class="inline-flex items-center text-base font-medium text-inter_red hover:text-red-700 "> Explora nuestras Carreras
                         <i class="ml-2 fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -87,7 +87,7 @@
         </div>
       </section>
     <!-- End block -->
-    
+
     <!-- Start block -->
     <section class="bg-white dark:bg-gray-900">
         <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
@@ -98,10 +98,22 @@
 				</div>
             </div>
             <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+            <?php
+                $args = array(
+                    'post_type' => 'perfiles',
+                    'posts_per_page' => 3, 
+                    'orderby' => 'rand',
+                );
+                $latest_post = new WP_Query($args);
 
+                // Check if there are posts
+                if ($latest_post->have_posts()) {
+                    while ($latest_post->have_posts()) {
+                        $latest_post->the_post();
+            ?>
                 <!-- Card -->
-                <div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <h3 class="mb-4 text-2xl font-semibold">Perfil 1</h3>
+                <div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 ">
+                    <h3 class="mb-4 text-2xl font-semibold"><?php the_title(); ?></h3>
 
                     <div class="flex items-baseline justify-center mb-4">
                         <span class="text-inter_red fa-stack fa-2x">
@@ -109,125 +121,33 @@
                             <i class="fa-solid fa-user-graduate fa-stack-1x fa-inverse"></i>
                         </span>
                     </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400 mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <div class="font-light text-gray-500 sm:text-lg mb-8"><?php the_excerpt(); ?></div>
+                    <div id="perfiles" class="[&_ul]:mb-8 [&_ul]:space-y-4 [&_ul]:text-left [&_li]:flex [&_li]:items-center [&_li]:space-x-3">
+                        <?php echo get_field('perfiles'); ?>
+                    </div>
                     
-                    <!-- List -->
-                    <ul role="list" class="mb-8 space-y-4 text-left">
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                    </ul>
-                    <a href="#" class="text-white bg-inter_red hover:shadow-lg hover:shadow-red-300 focus:ring-3 focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-purple-900">Ver Carrera</a>
+                    
+                    <a href="<?php the_permalink(get_field('carrera')); ?>" class="text-white bg-inter_red hover:shadow-lg hover:shadow-red-300 focus:ring-3 focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-purple-900">Ver Carrera</a>
                 </div>
+
+                <?php
+                        }
+                    }
+
+                    // Restore original post data
+                    wp_reset_postdata();
+                ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function(){ 
+                        for (const li of document.querySelectorAll('#perfiles>ul>li')) {
+                            let content = li.textContent; 
+                            let newContent = `<i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
+                            <span> ${content}</span>`;
+                            li.innerHTML = newContent;
+                        }
+                    }, false);
+                </script>
                 
-                <!-- Card -->
-                <div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <h3 class="mb-4 text-2xl font-semibold">Perfil 2</h3>
-
-                    <div class="flex items-baseline justify-center mb-4">
-                        <span class="text-inter_red fa-stack fa-2x">
-                            <i class="fa-solid fa-circle fa-stack-2x"></i>
-                            <i class="fa-solid fa-user-graduate fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400 mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                    
-                    <!-- List -->
-                    <ul role="list" class="mb-8 space-y-4 text-left">
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                    </ul>
-                    <a href="#" class="text-white bg-inter_red hover:shadow-lg hover:shadow-red-300 focus:ring-3 focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-purple-900">Ver Carrera</a>
-                </div>
-                
-                <!-- Card -->
-                <div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <h3 class="mb-4 text-2xl font-semibold">Perfil 3</h3>
-
-                    <div class="flex items-baseline justify-center mb-4">
-                        <span class="text-inter_red fa-stack fa-2x">
-                            <i class="fa-solid fa-circle fa-stack-2x"></i>
-                            <i class="fa-solid fa-user-graduate fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400 mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                    
-                    <!-- List -->
-                    <ul role="list" class="mb-8 space-y-4 text-left">
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <!-- Icon -->
-                            <i class="flex-shrink-0 text-green-500 fa-solid fa-check"></i>
-                            <span>Caracteristica del egresado</span>
-                        </li>
-                    </ul>
-                    <a href="#" class="text-white bg-inter_red hover:shadow-lg hover:shadow-red-300 focus:ring-3 focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-purple-900">Ver Carrera</a>
-                </div>
-
             </div>
         </div>
       </section>

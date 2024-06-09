@@ -15,31 +15,31 @@ $query = new WP_Query($args);
 
 <section class="bg-white dark:bg-gray-900 mb-2 pt-20 md:pt-5">
     <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
-		<div class="mx-8">
+        <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
+            <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Nuestras Carreras</h2>
+        </div>
+        <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
 
         <?php 
             if ($query->have_posts()) : 
-                while ($query->have_posts()) : $query->the_post(); ?>
+                while ($query->have_posts()) : $query->the_post(); 
+                    if ( has_post_thumbnail() ) { // check if the post has a featured image
+                        $featured_img_url = get_the_post_thumbnail_url(get_the_ID(),'full');
+                    }else{
+                        $featured_img_url ='';
+                    }
+                ?>
 
-            <div class="mb-8">
-                <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">
-                    <?php the_title(); ?>
-                </h2>
-                <div class="font-light text-gray-500 sm:text-xl dark:text-gray-400"> 
-                        <?php the_excerpt(); ?>
+                <div class="flex flex-col max-w-lg mx-auto text-gray-900 bg-white border border-gray-100 rounded-lg shadow  ">
+                    <img class="rounded-t-lg" src="<?php echo $featured_img_url; ?>" alt="">
+                    <h3 class="mb-4 text-2xl font-semibold px-4"> <?php the_title(); ?> </h3>
+                    <div class="font-normal text-gray-700 mb-3 mx-4 sm:text-lg"> <?php the_excerpt(); ?> </div>
+                    <a href="<?php the_permalink(); ?>" class="text-white bg-inter_red hover:shadow-lg hover:shadow-red-300 focus:ring-3 focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-4 mb-4">Ver Carrera</a>
                 </div>
-                <div class="pb-4 my-6 space-y-4 border-b border-gray-200 dark:border-gray-700">
-                    <div>
-                        <a href="<?php the_permalink(); ?>" class="inline-flex items-center text-base font-medium text-inter_red hover:text-red-700 "> Ver publicación
-                            <i class="ml-2 fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>                    
                         
             <?php endwhile; ?>
             <?php else : ?>
-                <p>No hay posts para mostrar...</p>
+                <p>No hay carreras para mostrar...</p>
             <?php endif; ?>
             <?php
             // Pagination links

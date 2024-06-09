@@ -29,7 +29,7 @@
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
             <div class="text-center">
                 
-                <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2023 Todos los derechos reservados.
+                <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© <?php echo date('Y'); ?> Todos los derechos reservados.
                 </span>
                 <ul class="flex justify-center mt-5 space-x-5">
                     <li>
